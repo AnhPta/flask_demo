@@ -1,17 +1,19 @@
 import os
+from app import app
 
 POSTGRES = {
     'user': 'flask',
     'pw': 'flask',
     'db': 'flask',
-    'host': 'localhost',
-    'port': '54321',
+    'host': 'db',
+    'port': '5432',
 }
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
-SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
-
-SQLALCHEMY_DATABASE_URI = 'postgres://%(user)s:\
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+app.config['SQLALCHEMY_MIGRATE_REPO'] = os.path.join(basedir, 'db_repository')
+
+WTF_CSRF_ENABLED = True
+SECRET_KEY = 'you-will-never-guess'

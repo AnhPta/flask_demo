@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "bootstrap/utils.html" as utils %}
+{% block content %}
+{% if users %}
+<div class="row">
+	{{ utils.flashed_messages() }}
+	<h2>List Users</h2>
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+				<th style="text-align: center;">ID</th>
+				<th style="text-align: center;">Username</th>
+				<th style="text-align: center;">Email</th>
+				<th style="text-align: center;">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<td>{{ user.id }}</td>
+				<td>{{ user.username }}</td>
+				<td>{{ user.email }}</td>
+				<td style="text-align: center;">
+					<a href="{{ url_for('update', id=user.id) }}" class="btn btn-warning btn-sm glyphicon glyphicon-pencil"></a>
+					<a href="{{ url_for('destroy', id=user.id) }}" class="btn btn-danger btn-sm glyphicon glyphicon-trash" onclick="return confirm('Confirm delete?')"></a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+</div>
+{% endblock %}

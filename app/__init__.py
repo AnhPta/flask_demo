@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -11,4 +11,9 @@ db = SQLAlchemy(app)
 Migrate = Migrate(app, db)
 # db.create_all()
 
-from app import views, models, forms
+@app.errorhandler(404)
+def not_found(error):  
+    return render_template('404.html')
+
+from app.controllers import usercontrollers
+from app import routes, models, forms

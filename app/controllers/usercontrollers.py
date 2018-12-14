@@ -1,16 +1,10 @@
-from app import app, db, models, forms
+from app import app, db, models, forms, routes
 from flask import render_template, request, redirect, url_for, flash
 
-@app.route('/', methods = ['GET'])
-def hello():
-    return "This is root url"
-
-@app.route('/users', methods = ['GET', 'POST'])
 def index():
     users = models.User.query.all()
-    return render_template("users.html", users = users)
+    return render_template("users/users.html", users = users)
 
-@app.route('/users/add', methods = ['GET', 'POST'])
 def store():
     action = 'store'
     form = forms.UserForm()
@@ -23,13 +17,12 @@ def store():
         try:
             db.session.add(user)
             db.session.commit()
-            flash('Create successC', 'success')
+            flash('Create success', 'success')
             return redirect(url_for('index'))
         except:
             flash('Error : Username already exists', 'error')
-    return render_template("form.html", form = form, action = action)
+    return render_template("users/form.html", form = form, action = action)
 
-@app.route('/users/edit/<id>', methods=['GET', 'POST'])
 def update(id):
     action = 'update'
 
@@ -48,9 +41,8 @@ def update(id):
             flash('Error : Username already exists', 'error')
     form.username.data = user.username 
     form.email.data = user.email
-    return render_template('form.html', form = form)
+    return render_template('users/form.html', form = form)
 
-@app.route('/users/delete/<id>', methods=['GET', 'POST'])
 def destroy(id):
     """
     Delete a user from the database

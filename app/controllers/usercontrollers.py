@@ -1,7 +1,7 @@
-from app import app, db, models, forms, routes
-from flask import render_template, request, redirect, url_for, flash
+from app import db, models, forms
+from flask import render_template, redirect, url_for, flash
 
-def index():
+def user_index():
     users = models.User.query.all()
     return render_template("users/users.html", users = users)
 
@@ -18,9 +18,9 @@ def store():
             db.session.add(user)
             db.session.commit()
             flash('Create success', 'success')
-            return redirect(url_for('index'))
-        except:
-            flash('Error : Username already exists', 'error')
+            return redirect(url_for('user_index'))
+        except Exception:
+            flash('Error: Username or Email is already', 'error')
     return render_template("users/form.html", form = form, action = action)
 
 def update(id):
@@ -36,28 +36,16 @@ def update(id):
         try:
             db.session.commit()
             flash('Edit success', 'success')
-            return redirect(url_for('index'))
+            return redirect(url_for('user_index'))
         except:
-            flash('Error : Username already exists', 'error')
+            flash('Error: Username or Email is already', 'error')
     form.username.data = user.username 
     form.email.data = user.email
     return render_template('users/form.html', form = form)
 
 def destroy(id):
-    """
-    Delete a user from the database
-    """
     user = models.User.query.get_or_404(id)
     db.session.delete(user)
     db.session.commit()
     flash('Delete success', 'success')
-
-    # redirect to the users page
-    return redirect(url_for('index'))
-
-    return render_template(title="Delete User")
-
-    # user = models.User(request.form['username'], request.form['email'])
-    # db.session.add(user)
-    # db.session.commit()
-    # return redirect(url_for('index'))
+    return redirect(url_for('user_index'))

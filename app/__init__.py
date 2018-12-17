@@ -15,5 +15,4 @@ Migrate = Migrate(app, db)
 def not_found(error):  
     return render_template('404.html')
 
-from app.controllers import usercontrollers
-from app import routes, models, forms
+from app import routes, models

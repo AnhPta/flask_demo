@@ -1,9 +1,8 @@
 {% extends "base.html" %}
-{% import "bootstrap/utils.html" as utils %}
 {% block content %}
 <div class="row">
-	{{ utils.flashed_messages() }}
 	<div class="col-md-6">
+		<a href="{{ url_for('user_index') }}" class="btn btn-success btn-sm glyphicon glyphicon-arrow-left"></a>
 		<form method="POST" action="">
 			{{ form.hidden_tag() }}
 			<fieldset class="form-group">
@@ -12,6 +11,7 @@
 				{% else %}
 				<legend class="border-bottom mb-4">Edit User</legend>
 				{% endif %}
+
 				<div class="form-group">
 					{{ form.username.label(class="form-control-label") }}
 

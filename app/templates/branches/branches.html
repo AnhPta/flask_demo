@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('branch_store') }}" class="btn btn-primary btn-sm glyphicon glyphicon-plus" title="Add new branch"></a>
+{% if branches %}
+<h2>List Branches</h2>
+
+<table class="table table-bordered table-striped table-hover">
+	<thead>
+		<tr>
+			<th style="text-align: center;">ID</th>
+			<th style="text-align: center;">Name</th>       
+			<th style="text-align: center;">Email</th>      
+			<th style="text-align: center;">Phone</th>      
+			<th style="text-align: center;">Tax_number</th> 
+			<th style="text-align: center;">Website</th>    
+			<th style="text-align: center;">Description</th>
+			<th style="text-align: center;">Bank</th>       
+			<th style="text-align: center;">City</th>    
+			<th style="text-align: center;">District</th>
+			<th style="text-align: center;">Status</th>     
+			<th style="text-align: center;">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for branch in branches %}
+		<tr>
+			<td>{{ branch.id }}</td>
+			<td>{{ branch.name}}</td>       
+			<td>{{ branch.email}}</td>      
+			<td>{{ branch.phone}}</td>      
+			<td>{{ branch.tax_number}}</td> 
+			<td>{{ branch.website}}</td>    
+			<td>{{ branch.description}}</td>
+			<td>{{ branch.bank}}</td>       
+			<td>{{ branch.city_id}}</td>    
+			<td>{{ branch.district_id}}</td>
+			<td>{{ branch.status}}</td>      
+			<td style="text-align: center;">
+				<a href="{{ url_for('branch_update', id=branch.id) }}" class="btn btn-warning btn-sm glyphicon glyphicon-pencil" title="Edit"></a>
+				<a href="{{ url_for('branch_destroy', id=branch.id) }}" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Delete" onclick="return confirm('Confirm delete?')"></a>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+{% endblock %}
